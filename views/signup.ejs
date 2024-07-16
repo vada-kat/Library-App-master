@@ -1,29 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+  </head>
+  <body>
+    <%- include("header.ejs") %>
     <h1>Sign Up</h1>
     <form action="">
-        <input type="password" name="password" id="password">
-        <p id="password-error"></p>
+      <div>
+        <label for="fullname">FullName</label>
+        <input type="text" name="fullname" id="fullname" />
+      </div>
+      <div>
+        <label for="address">Home Address</label>
+        <input type="text" name="address" id="address" />
+      </div>
+      <div>
+        <label for="phone">Phone Number</label>
+        <input type="text" name="phone" id="phone" />
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" />
+      </div>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" />
+      <p id="password-error"></p>
+      <div>
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" name="confirm-password" id="confirm-password" required></label>
+      </div>
+      <input type="submit" value="Sign Up">
     </form>
+    <p>Already have an account? <a href="/signin">Sign In</a></p>
 
     <script>
-        const passwordInput = document.getElementById("password")
-        const passwordError = document.getElementById("password-error")
+      const passwordInput = document.getElementById("password");
+      const passwordError = document.getElementById("password-error");
 
-        password.addEventListener("input", function(){
-            if(password.value.length < 8){
-                passwordError.textContent = "Password must be at least 8 characters"
-            }else{
-                passwordError.textContent = ""
-            }
-        })  
-    </script>    
-    
-</body>
+      password.addEventListener("input", function () {
+        if (password.value.length < 8) {
+          passwordError.textContent = "Password must be at least 8 characters";
+        } else {
+          passwordError.textContent = "";
+        }
+      });
+      document
+        .getElementById("confirm-password")
+        .addEventListener("input", function () {
+          if (
+            password.value !== document.getElementById("confirm-password").value
+          ) {
+            passwordError.textContent = "Passwords do not match";
+          } else {
+            passwordError.textContent = "";
+          }
+        });
+    </script>
+  </body>
 </html>

@@ -26,6 +26,37 @@ app.use((req,res,next)=>{
 app.get("/",(req,res)=>{
     res.render("index.ejs")
 })
+app.get("/signup",(req,res)=>{
+    res.render("signup.ejs")
+})
+app.get("/signin",(req,res)=>{
+    res.render("signin.ejs")
+})
+app.post("/signup",(req,res)=>{ 
+    //get data sent from html-through req.body
+    // //check if email provided is in the database(already registered)
+    //hash password
+    //store data/register new user then redirect to signin page
+    console.log(req.body)
+    dbconn.query(`Select Email FROM members WHERE Email="${req.body.email}"`,(err,result)=>{
+        if(err){
+            res.status(500).send("Error Occured!!")
+        }else{
+            if(result.length>0){
+                res.render("signup.ejs", {errorMessage: "Email already in use. signup"})
+            }else{
+                const hashedPassword = bcrypt.hashSync(req.body.password, 5)
+
+                dbconn.query(`INSERT INTO members (Fullname,Address,Phone,Email,Password,Club) VALUES ("${req.body.fullname}","${req.body.email}","${hashedPassword}" "${req.body.phone}"
+                "${req.body.address}","${req.body.club}")`,(err,result)=>{
+                    if(error)res.status(500).send("server error")
+                        res.redirect("/signin")
+                })
+            }
+        }
+    })
+    res.redirect("/signup")
+})
 
 app.get("/authors",(req,res)=>{
     dbconn.query("SELECT * FROM authors", (err,authors)=>{
